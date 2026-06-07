@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   ShoppingBag,
   ShieldCheck,
@@ -11,6 +13,24 @@ import {
 import bottleImg from "../assets/bottle.png";
 
 export default function Products() {
+  const { hash } = useLocation();
+
+  // YEH NAYA SCROLL LOGIC HAI
+  useEffect(() => {
+    if (hash) {
+      // Agar link mein hash (#) hai, toh us jagah par smooth scroll karo
+      setTimeout(() => {
+        const element = document.getElementById(hash.replace("#", ""));
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 100);
+    } else {
+      // Warna page ke bilkul top par raho
+      window.scrollTo(0, 0);
+    }
+  }, [hash]);
+
   return (
     <div className="w-full min-h-screen bg-white flex flex-col">
       {/* 1. Page Header (Dark Theme) */}
@@ -33,8 +53,8 @@ export default function Products() {
         </div>
       </section>
 
-      {/* 2. Main Product Showcase (Light Theme) */}
-      <section className="py-20 px-6 bg-gray-50">
+      {/* 2. Main Product Showcase (Light Theme) - YAHAN ID ADD KI HAI */}
+      <section id="product-showcase" className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-[3rem] overflow-hidden shadow-2xl border border-gray-100 flex flex-col lg:flex-row items-stretch">
             {/* Product Image */}

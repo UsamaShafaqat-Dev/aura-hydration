@@ -106,7 +106,7 @@ export default function Values() {
 
           {/* REACT ROUTER LINK USE KIYA HAI YAHA */}
           <Link
-            to="/products"
+            to="/products#product-showcase"
             className="inline-flex items-center justify-center bg-aura-gold text-black hover:bg-yellow-500 px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(216,170,71,0.2)] hover:shadow-[0_0_30px_rgba(216,170,71,0.4)]"
           >
             Explore Our Products
