@@ -25,7 +25,7 @@ export default function Footer() {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:5000/api/newsletter/subscribe",
+        "https://aura-hydration.onrender.com/api/newsletter/subscribe",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

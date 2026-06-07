@@ -44,13 +44,13 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
       try {
-        const resMsg = await fetch("http://localhost:5000/api/admin/messages", {
+        const resMsg = await fetch("https://aura-hydration.onrender.com/api/admin/messages", {
           headers: { Authorization: token },
         });
         const dataMsg = await resMsg.json();
 
         const resSub = await fetch(
-          "http://localhost:5000/api/admin/newsletter",
+          "https://aura-hydration.onrender.com/api/admin/newsletter",
           {
             headers: { Authorization: token },
           },
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
           ? `/api/admin/messages/${id}`
           : `/api/admin/newsletter/${id}`;
 
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`https://aura-hydration.onrender.com${endpoint}`, {
         method: "DELETE",
         headers: { Authorization: token },
       });
