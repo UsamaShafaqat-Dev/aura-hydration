@@ -20,7 +20,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("messages");
 
-  // Custom Modal & Toast States (Ab isme 'type' bhi add kiya hai taake pata chale kya delete ho raha hai)
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     id: null,
@@ -44,9 +43,12 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
       try {
-        const resMsg = await fetch("https://aura-hydration.onrender.com/api/admin/messages", {
-          headers: { Authorization: token },
-        });
+        const resMsg = await fetch(
+          "https://aura-hydration.onrender.com/api/admin/messages",
+          {
+            headers: { Authorization: token },
+          },
+        );
         const dataMsg = await resMsg.json();
 
         const resSub = await fetch(
@@ -77,12 +79,10 @@ export default function AdminDashboard() {
     fetchData();
   }, [navigate]);
 
-  // Modal Open Karne Ka Function
   const confirmDeleteAction = (id, type) => {
     setDeleteModal({ isOpen: true, id: id, type: type });
   };
 
-  // Delete Execute Karne Ka Function
   const executeDelete = async () => {
     const token = localStorage.getItem("adminToken");
     const { id, type } = deleteModal;
@@ -90,16 +90,18 @@ export default function AdminDashboard() {
     setDeleteModal({ isOpen: false, id: null, type: "" });
 
     try {
-      // Dynamic API Endpoint (Agar message hai to message API, warna newsletter API)
       const endpoint =
         type === "message"
           ? `/api/admin/messages/${id}`
           : `/api/admin/newsletter/${id}`;
 
-      const res = await fetch(`https://aura-hydration.onrender.com${endpoint}`, {
-        method: "DELETE",
-        headers: { Authorization: token },
-      });
+      const res = await fetch(
+        `https://aura-hydration.onrender.com${endpoint}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: token },
+        },
+      );
       const data = await res.json();
 
       if (data.success) {
@@ -132,7 +134,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0310] text-white p-8 relative">
+    <div className="min-h-screen bg-[#0a0310] text-white p-4 md:p-8 relative">
       {/* Toast Notification */}
       <div
         className={`fixed top-10 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl backdrop-blur-md transition-all duration-500 ${
@@ -142,13 +144,13 @@ export default function AdminDashboard() {
         } ${toast.type === "success" ? "bg-green-500/10 border border-green-500/20 text-green-400" : "bg-red-500/10 border border-red-500/20 text-red-400"}`}
       >
         <CheckCircle2 size={20} />
-        <p className="font-medium text-sm">{toast.message}</p>
+        <p className="font-medium text-sm text-center">{toast.message}</p>
       </div>
 
       {/* Delete Confirmation Modal */}
       {deleteModal.isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-          <div className="bg-[#11071a] border border-white/10 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+          <div className="bg-[#11071a] border border-white/10 rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-5 border border-red-500/20">
               <AlertTriangle className="text-red-500" size={32} />
             </div>
@@ -173,7 +175,7 @@ export default function AdminDashboard() {
                 onClick={executeDelete}
                 className="flex-1 px-5 py-3 rounded-xl bg-red-500/20 text-red-500 border border-red-500/30 hover:bg-red-500 hover:text-white transition-all font-medium"
               >
-                Yes, Delete
+                Delete
               </button>
             </div>
           </div>
@@ -181,7 +183,7 @@ export default function AdminDashboard() {
       )}
 
       {/* Top Header */}
-      <div className="max-w-7xl mx-auto flex justify-between items-center mb-8 border-b border-white/10 pb-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 border-b border-white/10 pb-6">
         <div>
           <h1 className="text-3xl font-bold text-white">
             Admin <span className="text-aura-gold">Dashboard</span>
@@ -191,17 +193,17 @@ export default function AdminDashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           <button
             onClick={() => navigate("/")}
-            className="bg-aura-gold/10 border border-aura-gold/20 text-aura-gold px-5 py-2.5 rounded-xl hover:bg-aura-gold hover:text-black transition-all flex items-center gap-2 font-medium"
+            className="flex-1 md:flex-none justify-center bg-aura-gold/10 border border-aura-gold/20 text-aura-gold px-4 py-2.5 rounded-xl hover:bg-aura-gold hover:text-black transition-all flex items-center gap-2 font-medium text-sm"
           >
-            <Globe size={18} /> View Website
+            <Globe size={18} /> Website
           </button>
 
           <button
             onClick={handleLogout}
-            className="bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 transition-all flex items-center gap-2 font-medium"
+            className="flex-1 md:flex-none justify-center bg-white/5 border border-white/10 text-white px-4 py-2.5 rounded-xl hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 transition-all flex items-center gap-2 font-medium text-sm"
           >
             <LogOut size={18} /> Logout
           </button>
@@ -209,31 +211,31 @@ export default function AdminDashboard() {
       </div>
 
       {/* Premium Tab Navigation */}
-      <div className="max-w-7xl mx-auto mb-10 flex gap-4 border-b border-white/10 pb-px">
+      <div className="max-w-7xl mx-auto mb-8 flex flex-wrap gap-2 border-b border-white/10 pb-px">
         <button
           onClick={() => setActiveTab("messages")}
-          className={`flex items-center gap-2 px-6 py-3 font-medium transition-all border-b-2 ${
+          className={`flex items-center gap-2 px-4 py-3 font-medium transition-all border-b-2 text-sm md:text-base ${
             activeTab === "messages"
               ? "border-aura-gold text-aura-gold"
               : "border-transparent text-gray-400 hover:text-white"
           }`}
         >
-          <MessageSquare size={18} /> Contact Inquiries
-          <span className="bg-white/10 px-2 py-0.5 rounded-full text-xs ml-2">
+          <MessageSquare size={18} /> Inquiries
+          <span className="bg-white/10 px-2 py-0.5 rounded-full text-xs ml-1">
             {messages.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab("subscribers")}
-          className={`flex items-center gap-2 px-6 py-3 font-medium transition-all border-b-2 ${
+          className={`flex items-center gap-2 px-4 py-3 font-medium transition-all border-b-2 text-sm md:text-base ${
             activeTab === "subscribers"
               ? "border-aura-gold text-aura-gold"
               : "border-transparent text-gray-400 hover:text-white"
           }`}
         >
-          <Users size={18} /> Newsletter Subscribers
-          <span className="bg-white/10 px-2 py-0.5 rounded-full text-xs ml-2">
+          <Users size={18} /> Subscribers
+          <span className="bg-white/10 px-2 py-0.5 rounded-full text-xs ml-1">
             {subscribers.length}
           </span>
         </button>
@@ -252,23 +254,27 @@ export default function AdminDashboard() {
               {messages.map((msg) => (
                 <div
                   key={msg._id}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-aura-gold/30 transition-all group relative overflow-hidden"
+                  className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-aura-gold/30 transition-all group relative overflow-hidden"
                 >
-                  <div className="flex flex-col md:flex-row justify-between gap-6">
-                    <div className="md:w-1/3 space-y-3">
-                      <h3 className="text-xl font-bold text-aura-gold">
+                  <div className="flex flex-col lg:flex-row justify-between gap-6">
+                    <div className="lg:w-1/3 space-y-3 pr-8">
+                      <h3 className="text-xl font-bold text-aura-gold break-words">
                         {msg.name}
                       </h3>
-                      <div className="flex items-center gap-2 text-gray-300 text-sm">
-                        <Mail size={16} className="text-gray-500" /> {msg.email}
+                      <div className="flex items-center gap-2 text-gray-300 text-sm break-all">
+                        <Mail size={16} className="text-gray-500 shrink-0" />{" "}
+                        {msg.email}
                       </div>
                       <div className="flex items-center gap-2 text-gray-300 text-sm">
-                        <Phone size={16} className="text-gray-500" />{" "}
+                        <Phone size={16} className="text-gray-500 shrink-0" />{" "}
                         {msg.phone}
                       </div>
                       {msg.location && (
                         <div className="flex items-center gap-2 text-gray-300 text-sm">
-                          <MapPin size={16} className="text-gray-500" />{" "}
+                          <MapPin
+                            size={16}
+                            className="text-gray-500 shrink-0"
+                          />{" "}
                           {msg.location}
                         </div>
                       )}
@@ -277,77 +283,71 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div className="md:w-2/3 bg-black/40 rounded-xl p-5 border border-white/5 relative">
+                    <div className="lg:w-2/3 bg-black/40 rounded-xl p-4 md:p-5 border border-white/5 relative">
                       <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-2 font-bold">
                         Message
                       </h4>
-                      <p className="text-gray-200 leading-relaxed whitespace-pre-wrap">
+                      <p className="text-gray-200 text-sm md:text-base leading-relaxed whitespace-pre-wrap">
                         {msg.message}
                       </p>
-
-                      <button
-                        onClick={() => confirmDeleteAction(msg._id, "message")}
-                        className="absolute top-4 right-4 text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-all"
-                        title="Delete Message"
-                      >
-                        <Trash2 size={20} />
-                      </button>
                     </div>
                   </div>
+
+                  <button
+                    onClick={() => confirmDeleteAction(msg._id, "message")}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-all"
+                    title="Delete Message"
+                  >
+                    <Trash2 size={20} />
+                  </button>
                 </div>
               ))}
             </div>
           ))}
 
-        {/* Tab 2: Subscribers View */}
+        {/* Tab 2: Subscribers View - 100% INQUIRIES CARD COPY (NO SCROLL) */}
         {activeTab === "subscribers" &&
           (subscribers.length === 0 ? (
             <div className="bg-white/5 border border-white/10 rounded-2xl p-10 text-center text-gray-400">
               No subscribers yet.
             </div>
           ) : (
-            <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-              {/* Table Header: Ab isme 3 columns hain (Email, Date, aur Delete button ki jagah) */}
-              <div className="grid grid-cols-[1fr_1fr_auto] gap-4 bg-black/40 p-5 border-b border-white/5 items-center">
-                <div className="font-bold text-gray-400 text-sm uppercase tracking-wider">
-                  Email Address
-                </div>
-                <div className="font-bold text-gray-400 text-sm uppercase tracking-wider">
-                  Subscribed On
-                </div>
-                <div className="w-8"></div> {/* Khali jagah icon ke liye */}
-              </div>
+            <div className="grid gap-6">
+              {subscribers.map((sub) => (
+                <div
+                  key={sub._id}
+                  className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-aura-gold/30 transition-all group relative overflow-hidden"
+                >
+                  <div className="flex flex-col lg:flex-row justify-between gap-6 pr-8">
+                    <div className="lg:w-1/2 space-y-3">
+                      <h4 className="text-xs uppercase tracking-widest text-gray-500 font-bold">
+                        Subscriber Email
+                      </h4>
+                      <div className="flex items-center gap-2 text-aura-gold font-bold text-lg md:text-xl break-all">
+                        <Mail size={20} className="text-gray-500 shrink-0" />{" "}
+                        {sub.email}
+                      </div>
+                    </div>
 
-              {/* Table Body */}
-              <div className="divide-y divide-white/5">
-                {subscribers.map((sub) => (
-                  <div
-                    key={sub._id}
-                    className="grid grid-cols-[1fr_1fr_auto] gap-4 p-5 hover:bg-white/5 transition-all items-center"
-                  >
-                    <div className="flex items-center gap-3 text-aura-gold font-medium">
-                      <Mail size={16} className="text-gray-500" /> {sub.email}
+                    <div className="lg:w-1/2 bg-black/40 rounded-xl p-4 border border-white/5 w-fit h-fit">
+                      <h4 className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-1">
+                        Date Joined
+                      </h4>
+                      <p className="text-gray-300 text-sm">
+                        {new Date(sub.createdAt).toLocaleString()}
+                      </p>
                     </div>
-                    <div className="text-gray-400 text-sm">
-                      {new Date(sub.createdAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </div>
-                    {/* Delete Button for Subscriber */}
-                    <button
-                      onClick={() => confirmDeleteAction(sub._id, "subscriber")}
-                      className="text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-all"
-                      title="Delete Subscriber"
-                    >
-                      <Trash2 size={18} />
-                    </button>
                   </div>
-                ))}
-              </div>
+
+                  <button
+                    onClick={() => confirmDeleteAction(sub._id, "subscriber")}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-all"
+                    title="Delete Subscriber"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </div>
+              ))}
             </div>
           ))}
       </div>
