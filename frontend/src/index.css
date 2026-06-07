@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  /* Client UI Design ke Colors */
+  --color-aura-gold: #D8AA47;
+  --color-aura-dark: #0a0310;
+  --color-aura-purple: #1e0b2b;
+}
+
+/* Default website background dark aur text white kar diya */
+body {
+  background-color: var(--color-aura-dark);
+  color: white;
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
