@@ -332,7 +332,7 @@ export default function Footer() {
             </Link>
           </p>
           <p className="tracking-wide flex items-center gap-1.5">
-            Crafted with <span className="text-aura-gold">✦</span> by
+            Crafted with <span className="text-aura-gold">❤️</span> by
             <a
               href="https://wa.me/923053820963"
               target="_blank"
