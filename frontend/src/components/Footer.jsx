@@ -323,13 +323,6 @@ export default function Footer() {
           <p className="flex items-center gap-2">
             © {new Date().getFullYear()} Aura Hydration & Co. All rights
             reserved.
-            <Link
-              to="/admin/login"
-              className="text-white/20 hover:text-aura-gold transition-colors ml-1"
-              title="Admin Access"
-            >
-              <Lock size={12} />
-            </Link>
           </p>
           <p className="tracking-wide flex items-center gap-1.5">
             Crafted with <span className="text-aura-gold">❤️</span> by

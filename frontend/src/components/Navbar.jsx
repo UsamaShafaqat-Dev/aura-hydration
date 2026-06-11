@@ -8,6 +8,7 @@ import {
   Droplet,
   Star,
   ChevronRight,
+  Lock, // <-- Yahan Lock icon add kiya hai
 } from "lucide-react";
 import logoImg from "../assets/logo.png";
 
@@ -35,8 +36,9 @@ export default function Navbar() {
             </span>
             <span className="text-gray-300 sm:hidden">Premium Quality</span>
           </div>
-          <div className="flex items-center gap-3 md:gap-6">
-            {/* Number ko proper WhatsApp link bana diya gaya hai */}
+
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* WhatsApp Link */}
             <a
               href="https://wa.me/923000230128"
               target="_blank"
@@ -47,10 +49,26 @@ export default function Navbar() {
               +92 300 0230128
             </a>
 
+            {/* Slogan - Hidden on Mobile */}
             <span className="hidden sm:flex items-center gap-1.5">
               <Droplet size={10} className="text-aura-gold md:w-3.5 md:h-3.5" />{" "}
               Pure Water. Pure Life.
             </span>
+
+            {/* NEW: Admin Login Button in Top Corner */}
+            <Link
+              to="/admin/login"
+              className="flex items-center gap-1.5 hover:text-aura-gold transition-all duration-300 border-l border-aura-gold/30 pl-3 md:pl-4 ml-1 md:ml-2 group"
+              title="Admin Panel Login"
+            >
+              <Lock
+                size={10}
+                className="text-aura-gold group-hover:scale-110 transition-transform md:w-3.5 md:h-3.5"
+              />
+              <span className="font-bold uppercase tracking-widest text-gray-300 group-hover:text-aura-gold transition-colors">
+                Admin
+              </span>
+            </Link>
           </div>
         </div>
       </div>
@@ -120,8 +138,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* 3. PREMIUM MOBILE DROPDOWN (ANIMATED)
-       */}
+      {/* 3. PREMIUM MOBILE DROPDOWN (ANIMATED) */}
       <div
         className={`md:hidden absolute top-full left-0 w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] z-10 ${
           isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
